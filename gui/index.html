@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinal Eye | Control Panel</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/photos.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main class="workspace">
+    <header class="topbar">
+      <div class="brand">
+        <h1>Sentinal Eye</h1>
+      </div>
+      <div class="status">
+        <span id="run-status" class="badge" data-state="idle" role="status">Connecting…</span>
+        <div id="ssh-target" hidden>
+          <label class="target" for="jetson-ip">Jetson IP</label>
+          <input id="jetson-ip" dir="ltr" type="text" maxlength="45" value="192.168.0.29"
+                 autocomplete="off" autocapitalize="off" spellcheck="false">
+        </div>
+        <a id="people-admin" class="panel-link" href="/admin" hidden>Manage people</a>
+        <form id="sign-out" action="/logout" method="post" hidden>
+          <button type="submit">Sign out</button>
+        </form>
+      </div>
+    </header>
+
+    <div class="dashboard">
+      <section class="panel operation" aria-labelledby="operation-title">
+        <h2 id="operation-title" class="section-heading">Camera controls</h2>
+        <form id="camera-form">
+          <div class="settings">
+            <label>Face model
+              <select id="face-model">
+                <option value="buffalo_m">buffalo_m</option>
+                <option value="buffalo_l">buffalo_l</option>
+              </select>
+            </label>
+            <label>Expression model
+              <select id="expression-model">
+                <option value="off">Off</option>
+                <option value="hsemotion">HSEmotion</option>
+                <option value="dan">DAN</option>
+              </select>
+            </label>
+            <label>Output
+              <select id="mode">
+                <option value="web">Live video</option>
+                <option value="headless">Logs only</option>
+              </select>
+            </label>
+          </div>
+          <div class="actions">
+            <button id="start" class="primary" disabled>Start</button>
+            <button id="stop" type="button" disabled>Stop</button>
+          </div>
+          <p id="run-result" class="message" role="status" hidden></p>
+        </form>
+
+        <div class="monitor">
+          <p id="preview-empty" class="empty"><span id="preview-message">Start a session to view live video.</span></p>
+          <img id="preview" alt="Live video from the Jetson cameras" hidden>
+        </div>
+        <section class="recognition" aria-labelledby="performance-title">
+          <h3 id="performance-title">Performance</h3>
+          <dl id="jetson-metrics" class="metrics" hidden>
+            <div><dt>CPU load</dt><dd id="cpu-load">—</dd></div>
+            <div><dt>GPU load</dt><dd id="gpu-load">—</dd></div>
+            <div><dt>RAM used</dt><dd id="ram-used">—</dd></div>
+            <div><dt>Peak temperature</dt><dd id="peak-temperature">—</dd></div>
+          </dl>
+          <p id="jetson-metrics-state" class="hint" hidden>Waiting for Jetson metrics.</p>
+          <dl class="metrics" aria-label="Camera rates">
+            <div><dt>Camera 0 detection</dt><dd id="sensor-0-fps">—</dd></div>
+            <div><dt>Camera 1 detection</dt><dd id="sensor-1-fps">—</dd></div>
+            <div><dt>Preview output</dt><dd id="preview-fps">—</dd></div>
+          </dl>
+        </section>
+        <section class="recognition" aria-labelledby="recognition-title">
+          <h3 id="recognition-title">Recognized people</h3>
+          <p id="people-empty" class="hint">Waiting for a camera session.</p>
+          <ul id="recognized-people" class="people" aria-live="polite" hidden></ul>
+        </section>
+        <details id="log-panel">
+          <summary>Session log</summary>
+          <pre id="logs">No messages yet.</pre>
+        </details>
+      </section>
+
+      <section class="panel enrollment" aria-labelledby="enroll-title">
+        <h2 id="enroll-title" class="section-heading">Add a person</h2>
+        <form id="person-form">
+          <label for="label">Recognition label</label>
+          <input id="label" name="label" type="text" maxlength="40" placeholder="Dana Levi" dir="ltr"
+                 pattern="[A-Za-z0-9][A-Za-z0-9 _\-]{0,39}" aria-describedby="label-note" required autocomplete="off">
+          <p id="label-note" class="hint">Use Latin letters. This label appears on the video and names the gallery folder.</p>
+
+          <label for="full-name">Full name <span class="optional">Optional</span></label>
+          <input id="full-name" name="fullName" type="text" maxlength="100" dir="auto" autocomplete="off">
+
+          <label for="notes">Notes <span class="optional">Optional</span></label>
+          <textarea id="notes" name="notes" maxlength="1000" rows="3" dir="auto"></textarea>
+
+          <div class="photos">
+            <label for="photos">Reference photos</label>
+            <div class="file-picker">
+              <span aria-hidden="true">Choose photos</span>
+              <input id="photos" name="photos" type="file"
+                     accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.heic,.heif" multiple required
+                     aria-describedby="photos-note photo-count">
+            </div>
+            <p id="photos-note" class="hint">Use 3–5 clear photos with one face in each image. HEIC photos are converted to JPEG when your browser can open them.</p>
+            <p id="photo-count" class="hint count" role="status"></p>
+          </div>
+
+          <button id="enroll" class="primary send">Save and upload</button>
+          <p id="enroll-result" class="message" role="status" hidden></p>
+        </form>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

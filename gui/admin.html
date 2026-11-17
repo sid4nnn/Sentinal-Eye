@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinal Eye | Manage people</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/photos.js" defer></script>
+  <script src="/admin.js" defer></script>
+</head>
+<body>
+  <main class="workspace">
+    <header class="topbar">
+      <div class="brand"><h1>Manage people</h1></div>
+      <a class="panel-link" href="/">Control panel</a>
+    </header>
+
+    <div class="admin-grid">
+      <section class="panel" aria-labelledby="gallery-title">
+        <div class="section-heading admin-list-header">
+          <h2 id="gallery-title">People gallery</h2>
+          <button id="reload-people" type="button">Reload</button>
+        </div>
+        <label for="search-people">Search by name or label</label>
+        <input id="search-people" type="search" autocomplete="off">
+        <p id="gallery-state" class="message" role="status">Loading the gallery…</p>
+        <ul id="gallery-list" class="gallery-list"></ul>
+      </section>
+
+      <section class="panel" aria-labelledby="editor-title">
+        <h2 id="editor-title" class="section-heading">Edit person</h2>
+        <p id="editor-empty" class="hint">Select a person from the gallery.</p>
+        <form id="edit-person" hidden>
+          <fieldset id="person-fields">
+            <label for="person-label">Recognition label</label>
+            <input id="person-label" maxlength="40" autocomplete="off" required>
+            <p class="hint">This label appears in the live video.</p>
+            <label for="person-name">Full name</label>
+            <input id="person-name" maxlength="100" dir="auto" autocomplete="off">
+            <label for="person-notes">Notes</label>
+            <textarea id="person-notes" maxlength="1000" rows="6" dir="auto"></textarea>
+            <div class="actions">
+              <button class="primary" id="save-person">Save changes</button>
+            </div>
+          </fieldset>
+          <p id="edit-state" class="message" role="status" hidden></p>
+        </form>
+        <section id="person-photos" class="recognition" aria-labelledby="reference-title" hidden>
+          <h3 id="reference-title">Reference photos</h3>
+          <form id="add-photos" class="photo-actions">
+            <input id="new-photos" type="file" multiple hidden
+                   accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.heic,.heif">
+            <button id="pick-photos" type="button">Add photos</button>
+            <span id="new-photo-count" class="hint" role="status"></span>
+            <button id="upload-photos" class="primary" type="submit" disabled>Save photos</button>
+          </form>
+          <p id="photo-state" class="message" role="status" hidden></p>
+          <button id="undo-photo" type="button" hidden>Undo removal</button>
+          <p id="photos-empty" class="hint" hidden>No reference photos. Add one to include this person in recognition.</p>
+          <ul id="reference-photos" class="reference-photos"></ul>
+        </section>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sentinal Eye | Sign in</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="login-workspace">
+    <section class="panel login-panel" aria-labelledby="login-title">
+      <div class="brand section-heading"><h1>Sentinal Eye</h1></div>
+      <h2 id="login-title">Sign in</h2>
+      <form action="/login" method="post">
+        <label for="username">Username</label>
+        <input id="username" name="username" value="admin" autocomplete="username" autocapitalize="off"
+               spellcheck="false" maxlength="32" required>
+        <label for="password">Panel password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" maxlength="80"
+               aria-describedby="password-hint" required>
+        <p id="password-hint" class="hint">Use the password in <code>panel-password.txt</code>.</p>
+        <!-- LOGIN_ERROR -->
+        <button class="primary send">Sign in</button>
+      </form>
+      <a class="text-link" href="/admin">Manage people</a>
+    </section>
+  </main>
+</body>
+</html>

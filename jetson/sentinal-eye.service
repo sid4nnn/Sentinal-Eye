@@ -1,0 +1,18 @@
+[Unit]
+Description=Sentinal Eye control panel
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=exec
+User=admin
+WorkingDirectory=/home/admin/sentinal-eye
+EnvironmentFile=/home/admin/sentinal-eye/.panel/service.env
+ExecStart=/usr/bin/python3 -u /home/admin/sentinal-eye/sentinal_gui.py --jetson ${PANEL_IP}
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=20
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
